@@ -120,7 +120,8 @@ window = sg.Window('CoH2 custom balancer by Kubencjusz', layout)
 
 while True:  # Pentla eventów i inputów
     event, values = window.read()
-    if event == 'Odświerz':
+    if event == 'Odśwież':
+
         with open(FILE_NAME) as f:
             data = f.read()
             PLAYERS = json.loads(data)
