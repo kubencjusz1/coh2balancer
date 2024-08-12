@@ -107,11 +107,11 @@ def calculate_points(diff_not_absolute: float, win_loose: bool, number_of_points
 layout = [
     [sg.Text('Git Gud')],
     [sg.Button('Odśwież')],
-    [sg.Combo(PLAYERS_NAMES, size=(12,20)), sg.Combo(PLAYERS_NAMES, size=(12,20)), sg.Combo(PLAYERS_NAMES, size=(12,20)), sg.Combo(PLAYERS_NAMES, size=(12,20))],
-    [sg.Combo(PLAYERS_NAMES, size=(12,20)), sg.Combo(PLAYERS_NAMES, size=(12,20)), sg.Combo(PLAYERS_NAMES, size=(12,20)), sg.Combo(PLAYERS_NAMES, size=(12,20))],
+    [sg.Combo(PLAYERS_NAMES, size=(12,20), key="P1"), sg.Combo(PLAYERS_NAMES, size=(12,20), key="P2"), sg.Combo(PLAYERS_NAMES, size=(12,20), key="P3"), sg.Combo(PLAYERS_NAMES, size=(12,20), key="P4")],
+    [sg.Combo(PLAYERS_NAMES, size=(12,20), key="P5"), sg.Combo(PLAYERS_NAMES, size=(12,20), key="P6"), sg.Combo(PLAYERS_NAMES, size=(12,20), key="P7"), sg.Combo(PLAYERS_NAMES, size=(12,20), key="P8")],
     [sg.Button('Generuj paringi')],
     [sg.Text('Kto wygrał rundę'), sg.Text(''), sg.Text('Ile punktów miał zwycięzca')],
-    [sg.Combo(['1', '2']), sg.Text('                  '), sg.Input(size=(5,2))],
+    [sg.Combo(['1', '2'], key="Teampick"), sg.Text('                  '), sg.Input(size=(5,2), key="Points")],
     [sg.Button('Potwierdź wygraną')],
     [sg.Output(size=(110,20))]
 ]
@@ -128,13 +128,13 @@ while True:  # Pentla eventów i inputów
 
     if event == 'Generuj paringi':
         try:
-            players = {value: None for _, value in list(values.items())[:8]}
+            players = {values[f"P{n+1}"]: None for n in range(8)}
             group1, group2, diff = team_generation(players)
         except KeyError:
             print("Najpierw wybierz graczy!/ Jesten z graczy jest źle dodany!")
     if event == 'Potwierdź wygraną':
         try:
-            update_results(group1, group2, values[8], values[9])
+            update_results(group1, group2, values["Teampick"], values["Points"])
         except NameError:
             print("Najpierw mecz zagraj pajacu!")
     if event == sg.WIN_CLOSED:  # killer
