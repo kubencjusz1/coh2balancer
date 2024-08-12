@@ -8,6 +8,8 @@ Systema automatycznie skoryguje rankingi graczy.
 Kwestie techniczne:
 Program można zaadoptować do dowolnej gry komputerowej. Wystarczy przeredagować listę losowanych map, frakcji.
 Tworzony domyślnie pod 4v4, w przypadku 3v3 i 2v2 dodać słupy o wartości typu 9999.
+
+
 #ANG
 Functionality:
 A project aimed at balancing games among friends in Company of Heroes 2.
