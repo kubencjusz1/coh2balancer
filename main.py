@@ -107,16 +107,25 @@ def calculate_points(diff_not_absolute: float, win_loose: bool, number_of_points
 layout = [
     [sg.Text('Git Gud')],
     [sg.Button('Odśwież')],
-    [sg.Combo(PLAYERS_NAMES, size=(12,20), key="P1"), sg.Combo(PLAYERS_NAMES, size=(12,20), key="P2"), sg.Combo(PLAYERS_NAMES, size=(12,20), key="P3"), sg.Combo(PLAYERS_NAMES, size=(12,20), key="P4")],
-    [sg.Combo(PLAYERS_NAMES, size=(12,20), key="P5"), sg.Combo(PLAYERS_NAMES, size=(12,20), key="P6"), sg.Combo(PLAYERS_NAMES, size=(12,20), key="P7"), sg.Combo(PLAYERS_NAMES, size=(12,20), key="P8")],
+    [sg.Combo(values=PLAYERS_NAMES, size=(12,20), key="P1", enable_events=True, readonly=False),
+     sg.Combo(values=PLAYERS_NAMES, size=(12,20), key="P2", enable_events=True, readonly=False),
+     sg.Combo(values=PLAYERS_NAMES, size=(12,20), key="P3", enable_events=True, readonly=False),
+     sg.Combo(values=PLAYERS_NAMES, size=(12,20), key="P4", enable_events=True, readonly=False)],
+    [sg.Combo(values=PLAYERS_NAMES, size=(12,20), key="P5", enable_events=True, readonly=False),
+     sg.Combo(values=PLAYERS_NAMES, size=(12,20), key="P6", enable_events=True, readonly=False),
+     sg.Combo(values=PLAYERS_NAMES, size=(12,20), key="P7", enable_events=True, readonly=False),
+     sg.Combo(values=PLAYERS_NAMES, size=(12,20), key="P8", enable_events=True, readonly=False)],
     [sg.Button('Generuj paringi')],
     [sg.Text('Kto wygrał rundę'), sg.Text(''), sg.Text('Ile punktów miał zwycięzca')],
     [sg.Combo(['1', '2'], key="Teampick"), sg.Text('                  '), sg.Input(size=(5,2), key="Points")],
     [sg.Button('Potwierdź wygraną')],
     [sg.Output(size=(110,20))]
 ]
-window = sg.Window('CoH2 custom balancer by Kubencjusz', layout)
+window = sg.Window('CoH2 custom balancer by Kubencjusz', layout, finalize=True)
 
+combo_keys = ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8"]
+for key in combo_keys:
+    window[key].bind("<KeyRelease>", "KeyRelease")
 
 while True:  # Pentla eventów i inputów
     event, values = window.read()
@@ -126,6 +135,14 @@ while True:  # Pentla eventów i inputów
             data = f.read()
             PLAYERS = json.loads(data)
         PLAYERS_NAMES = sorted(list(PLAYERS.keys()))
+
+    for key in combo_keys:
+        if event == key + "KeyRelease":
+            input_text = values[key]
+            filtered_items = [item for item in PLAYERS_NAMES if input_text.lower() in item[0].lower()]
+
+            # Aktualizacja listy wartości w Combo Boxie dla odpowiedniego pola
+            window[key].update(values=filtered_items)
 
     if event == 'Generuj paringi':
         try:
