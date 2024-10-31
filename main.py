@@ -2,10 +2,11 @@ from itertools import combinations
 import PySimpleGUI as sg
 import json
 import random
+from datetime import datetime
 
 #  Hardcoded data
 FILE_NAME = 'cohstats'
-MAPS = ["Huta w Essen", "Hill 400", "La Gleize", "Stepy", "Miasto 17", "Generał Gówno", "Redball", "Whiteball",
+MAPS = ["Huta w Essen", "Hill 400", "La Gleize", "Stepy", "Miasto 17", "Generał Błoto", "Redball", "Whiteball",
         "Las Lienne", "Atak na Lorch", "Nordwind", "Port w Hamburgu", "Road to Arnhem"]
 POINTS_CONSTANT = 0.2
 POINTS_PER_500 = 0.2
@@ -84,8 +85,7 @@ def update_results(group1: dict, group2: dict, number_of_winning_team: str, numb
         who_won_the_game(group1, diff_not_absolute, False, number_of_points, quotient)
     print(f"\nDrużyna {team_number} wygrała i zyskała ranking\n")
 
-    with open(FILE_NAME, 'w') as file:
-        file.truncate(0)
+    with open(f'{FILE_NAME}{datetime.now().strftime("%H.%M.%S_%d.%m")}', 'w') as file:
         json.dump(PLAYERS, file)
 
 
@@ -139,10 +139,10 @@ while True:  # Pentla eventów i inputów
     for key in combo_keys:
         if event == key + "KeyRelease":
             input_text = values[key]
-            filtered_items = [item for item in PLAYERS_NAMES if input_text.lower() in item[0].lower()]
+            filtered_items = [item for item in PLAYERS_NAMES if input_text.lower() == item[0:len(input_text)].lower()]
 
             # Aktualizacja listy wartości w Combo Boxie dla odpowiedniego pola
-            window[key].update(values=filtered_items)
+            window[key].update(values=filtered_items, value=input_text)
 
     if event == 'Generuj paringi':
         try:
