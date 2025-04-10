@@ -7,7 +7,7 @@ Wybieramy 8 graczy z dropdownów, generujemy teamy. Po wygranej wpisujemy punkty
 Systema automatycznie skoryguje rankingi graczy. 
 Kwestie techniczne:
 Program można zaadoptować do dowolnej gry komputerowej. Wystarczy przeredagować listę losowanych map, frakcji.
-Tworzony domyślnie pod 4v4, w przypadku 3v3 i 2v2 dodać słupy o wartości typu 9999.
+Tworzony domyślnie pod 4v4, ale działa pod 3v3 i 2v2.
 
 
 #ANG
@@ -18,4 +18,4 @@ The system will automatically adjust the player rankings.
 
 Technical details:
 The program can be adapted to any computer game. It only requires editing the list of maps and factions to be randomized.
-The program is designed by default for 4v4 matches; for 3v3 and 2v2, you should add dummy entries with a value of 9999.
+The program is designed by default for 4v4 matches but newer version handles 3v3 and 2v2.
